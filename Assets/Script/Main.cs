@@ -40,7 +40,7 @@ public class Main : MonoBehaviour {
             for (int i = 0; i < list.Length ; i++){
                 log += list[i] + ",";
                 //Debug.Log("时间/ID:" + Time.time + "/" + log);
-                Instantiate(Resources.Load("prefabs/"+Trifle.triflePrefabNames[list[i]]));
+                Instantiate(Resources.Load("Prefabs/"+Trifle.triflePrefabNames[list[i]]));
             }
 
         }

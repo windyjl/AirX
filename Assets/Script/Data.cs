@@ -15,7 +15,7 @@ class Data :MonoBehaviour {
     public static float SCREEN_HEIGHT = 7.2f;
     public Dictionary<string,int> setting = new Dictionary<string,int>();
     public int lvHeadband   = 0;//发带升级数据（出现频率，提升数值）
-    public int lvBowlerHat  = 0;//礼帽升级数据（出现频率，提升无敌时间）
+    public int lvBowlerHat  = 4;//礼帽升级数据（出现频率，提升无敌时间）
     public int lvGlasses    = 0;//眼镜升级数据（出现频率，提升数值）
     public int lvWriting = 0;//道符升级数据（出现频率，提升数值）
     public int lvInafune = 0;//飞船等级

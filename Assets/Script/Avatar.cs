@@ -194,21 +194,35 @@ public class Avatar : MonoBehaviour {
         isDreamMode = true;
         DreamModeDuration = Data.Instance.getDreamModeTime();
         //根据不同等级给出反馈
-        switch (Data.Instance.lvBowlerHat) {
-            case 4:
-                //圆神变身动画
-            case 3:
-                //与前进方向相同的飞行粒子
-            case 2:
-                //背景变色
-            case 1:
-                //满屏破碎特效，象征冲破时空束缚
-            case 0:
-                //普通条带
-                break;
-            default:
-                Debug.Log("帽子等级超过上限");
-                break;
+        for (int i = 0; i < Data.Instance.lvBowlerHat+1 ; i++){
+            GameObject obj = (GameObject)Instantiate(Resources.Load("Prefabs/Effects/Avatar/DreamModeEffectLv"+(i+1)));
+            switch (i) {
+                case 4:
+                    //圆神变身动画
+                    obj.transform.parent = Camera.main.transform;
+                    break;
+                case 3:
+                    //与前进方向相同的飞行粒子
+                    obj.transform.parent = Camera.main.transform;
+                    break;
+                case 2:
+                    //背景变色
+                    obj.transform.parent = Camera.main.transform;
+                    break;
+                case 1:
+                    //满屏破碎特效，象征冲破时空束缚
+                    obj.transform.parent = Camera.main.transform;
+                    break;
+                case 0:
+                    //普通条带
+                    obj.transform.parent = transform;
+                    break;
+                default:
+                    Debug.Log("帽子等级超过上限");
+                    break;
+            }
+            obj.transform.localPosition = Vector3.zero;
+            Destroy(obj, 5f);
         }
     }
 
