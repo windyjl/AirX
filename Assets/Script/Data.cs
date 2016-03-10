@@ -9,7 +9,6 @@ using System.Text;
 
 class Data :MonoBehaviour {
     private static readonly Data instance = new Data();
-    private Data() {}
     public static Data Instance {  get  {  return instance;   } }
     //显示参数
     public static float SCREEN_WIDTH = 12.8f;
@@ -20,19 +19,21 @@ class Data :MonoBehaviour {
     public int lvGlasses    = 0;//眼镜升级数据（出现频率，提升数值）
     public int lvWriting = 0;//道符升级数据（出现频率，提升数值）
     public int lvInafune = 0;//飞船等级
+    public int lvResistance = 0;
     //道具等级对应的数据
     private float[] arrHeadband = { 10, 20, 30, 40, 50 };  //发带升级数据
     private float[] arrBowlerHat = { 2, 2.5f, 3, 3.5f, 4 };  //无敌时间长度
     private float[] arrGlasses = { 10, 20, 30, 40, 50 };  //眼镜升级数据
-    private Vector3[] arrInafune = { new Vector3(10,0), new Vector3(20,0), new Vector3(30,0)};  //飞船等级
+    private Vector3[] arrInafune = { new Vector3(10,10), new Vector3(20,20), new Vector3(30,30)};  //飞船等级
     private int[] arrWriting = { 1, 2, 3, 4, 5 }; //初始道符数量
     //场景中琐事道具出现的概率
     private int[] popRateHeadband = { 3,7 };  //发带的出现数量
     private int[] popRateBowlerHat = {0,1};  //圆顶帽的出现数量
     private int[] popRateGlasses = { 3,7 };  //眼镜的出现数量
     //飞行环境因素
-    private float fGravity;
-    private float[] aResistance;
+    private ArrayList arrFlightArgu;
+    public float fGravity;
+    public float[] aResistance;
     // public int lvGlasses    = 0;
     // public int lvGlasses    = 0;
     // public int lvGlasses    = 0;
@@ -50,8 +51,34 @@ class Data :MonoBehaviour {
         string.Empty;  
 #endif  
 
-
-
+    
+    private Data() {
+        CheckData();
+        Debug.Log("重力："+fGravity);
+        Debug.Log("阻力:" + aResistance[0] + " " + aResistance[1] + " " + aResistance[2] + " " + aResistance[3] + " " + aResistance[4] + " ");
+    }
+    public void CheckData() {
+        arrFlightArgu = LoadFile(Application.dataPath + "/Resources/Config", "FlightArgument.txt");
+        for (int i = arrFlightArgu.Count - 1; i >= 0; --i) {
+            string[] astr = arrFlightArgu[i].ToString().Split(':');
+            if (astr[0].Equals("重力")){
+                fGravity = float.Parse( astr[1]);
+            } else if (astr[0].Equals("阻力")) {
+                aResistance = SplitStringToFloat(astr[1],',');
+            } else {
+                Debug.Log("该行数据为找到配对的存储对象:" + arrFlightArgu[i]);
+            }
+            arrFlightArgu.RemoveAt(i);
+        }
+    }
+    public float[] SplitStringToFloat(string str,char c){
+        string[] arr = str.Split(c);
+        float[] outArr = new float[arr.Length];
+        for (int i=0;i<arr.Length;++i){
+            outArr[i] = float.Parse(arr[i]);
+        }
+        return outArr;
+    }
     /** 
      * 读取文本文件 
      * path：读取文件的路径 
@@ -116,5 +143,10 @@ class Data :MonoBehaviour {
     //获得道符初始数量
     public int getWritingValue() {
         return arrWriting[lvWriting];
+    }
+
+    //获得阻力
+    public float getResistance() {
+        return aResistance[lvResistance];
     }
 }

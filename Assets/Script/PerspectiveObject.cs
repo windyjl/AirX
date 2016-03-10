@@ -53,12 +53,12 @@ public class PerspectiveObject : MonoBehaviour {
         if (isInit) {
             transform.position = GetDisplayPosition();
         }
-        if (!isDidCheck){
-            isDidCheck = true;
-            if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x)<(Data.SCREEN_WIDTH/2-sprite.sprite.rect.width/200)){
-                Debug.Log("fuck you，there is bug");
-            }
-        }
+//         if (!isDidCheck){
+//             isDidCheck = true;
+//             if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x)<(Data.SCREEN_WIDTH/2-sprite.sprite.rect.width/200)){
+//                 Debug.Log("fuck you，there is bug");
+//             }
+//         }
     }
     Vector3 GetDisplayPosition() {
         Vector3 off = Position - Camera.main.transform.position;

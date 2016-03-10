@@ -26,10 +26,16 @@ public class Avatar : MonoBehaviour {
     //状态
     public bool isLaunched = false;
     public bool isDragging = false;
+    public bool isControled = false;
+    public bool isLanded = false;
     protected bool isDreamMode = false;
     protected float DreamModeDuration = 0f;
     //道具数量
     public int nWriting = 0;
+
+    //测试数据
+    public float timeLaunch;
+
     public void Awake() {
         if (instance == null) {
             instance = this;
@@ -56,6 +62,7 @@ public class Avatar : MonoBehaviour {
 
     public void Launch()
     {
+        timeLaunch = Time.time;
         //Speed.x
         Speed = Data.Instance.getLaunchSpeed();
         if (Data.Instance.lvInafune==0)
@@ -105,18 +112,20 @@ public class Avatar : MonoBehaviour {
         Speed += res;
         Speed = Speed.normalized * spdmag;//TODO 临时限制速度
 
-        //float aos =
+        //重力计算
+        Speed.y -= Data.Instance.fGravity*Time.deltaTime;
         //阻力计算
-
+        Speed = Speed.normalized * (Speed.magnitude - Data.Instance.getResistance()*Time.deltaTime);
 
         //着陆后减速
-//         if (logicPosition.y<=0){
-//             if (Speed.x > 0) {
-//                 Speed.x -= AcceleratorStep.x * Time.deltaTime;
-//             } else {
-//                 Speed.x = 0;
-//             }
-//         }
+        if (logicPosition.y<=0){
+            //Debug.Log(timeLaunch-Time.time);
+            if (Speed.x > 0) {
+                Speed.x -= Data.Instance.getResistance() * Time.deltaTime;
+            } else {
+                Speed.x = 0;
+            }
+        }
     }
 
     // 攻角与升力的模糊计算，返回0~1的值，后续由常数调节
@@ -136,13 +145,29 @@ public class Avatar : MonoBehaviour {
         return res*isPos;
     }
 
+    //移动控制
     void DealMove()
     {
         logicPosition += Speed * Time.deltaTime;
         if (logicPosition.y<0)
         {
+            isLanded = true;
             logicPosition.y = 0;
             Speed.y = 0;
+        }
+
+        //如果发射后没有控制过方向，那么机头朝速度方向自动调整
+        if (!isControled && !isLanded) {
+            angleOfElevation = Vector3.Angle(Speed,Vector3.right);
+            if (Speed.y<0){
+                angleOfElevation *= -1;
+            }
+            if (angleOfElevation<-30){
+                angleOfElevation = -30;
+            }
+            CalcVectorOfSpeed();
+        }else if (isLanded){
+            angleOfElevation = 0;
         }
     }
 
@@ -234,12 +259,14 @@ public class Avatar : MonoBehaviour {
     public void PullUp() {
         angleOfElevation += AngleStickRate * Time.deltaTime;
         CalcVectorOfSpeed();
+        isControled = true;
     }
 
     //推下
     public void PushDown() {
         angleOfElevation -= AngleStickRate * Time.deltaTime;
         CalcVectorOfSpeed();
+        isControled = true;
     }
 
     protected void CalcVectorOfSpeed() {

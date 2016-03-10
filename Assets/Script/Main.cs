@@ -61,7 +61,7 @@ public class Main : MonoBehaviour {
 
 
     void Test() {
-        Debug.Log((-232.669-360) % 360);
+        //Debug.Log((-232.669-360) % 360); //取余对负数一样有效，但会保留符号
         //Debug.Log(Vector2.Angle(new Vector2(1, 0), new Vector2(1, 1)));
         //Data data = Data.Instance;
 //         Debug.Log("帽子等级：" + data.lvBowlerHat);
