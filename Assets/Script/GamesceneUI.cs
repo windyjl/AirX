@@ -39,22 +39,23 @@ public class GamesceneUI : MonoBehaviour
             //DontDestroyOnLoad(refMain);
             Application.LoadLevel("Game");
         }
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("SpeedX");
-        //SpeedX = int.Parse(GUILayout.TextArea("" + SpeedX));
-        GUILayout.EndHorizontal();
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("SpeedY");
-        //SpeedY = int.Parse(GUILayout.TextArea("" + SpeedY));
-        GUILayout.EndHorizontal();
+//         GUILayout.BeginHorizontal();
+//         GUILayout.Label("SpeedX");
+//         //SpeedX = int.Parse(GUILayout.TextArea("" + SpeedX));
+//         GUILayout.EndHorizontal();
+//         GUILayout.BeginHorizontal();
+//         GUILayout.Label("SpeedY");
+//         //SpeedY = int.Parse(GUILayout.TextArea("" + SpeedY));
+//         GUILayout.EndHorizontal();
         if (GUILayout.Button("发射"))
         {
             avatar.Launch();
             //refMain.Launch(SpeedX, SpeedY);
         }
-        if (GUILayout.Button("清除数据"))
+        if (GUILayout.Button("清除速度"))
         {
             //PlayerPrefs.DeleteAll();
+            Avatar.Instance.Speed = Vector3.zero;
         }
 		/* 协线程测试
         if (GUILayout.Button("测试Coroutine"))
@@ -68,7 +69,8 @@ public class GamesceneUI : MonoBehaviour
 		*/
         //Vector3 pos = refMain.player.transform.position;
         GUILayout.Label("道符：" + avatar.nWriting);
-        GUILayout.Label("*空格使用*");
+        GUILayout.Label("空格使用道符");
+        GUILayout.Label("←→ 调整角度");
         //GUILayout.Label("角色逻辑坐标 (" + pos.x.ToString("f2") + "," + pos.y.ToString("f2") + ")");
         //GUILayout.Label("击杀数(空格挥剑):" + KillEnemyCount + "");
         //pos = GameObject.Find("di").transform.position;

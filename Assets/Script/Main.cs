@@ -2,6 +2,20 @@
 using System.Collections;
 
 public class Main : MonoBehaviour {
+    private static Main instance;
+    private Main() {}
+    public static Main Instance {
+        get {
+            return instance;
+        }
+    }
+
+    public void Awake() {
+        if (instance == null) {
+            instance = this;
+        }
+    }
+
 	// Use this for initialization
 	void Start () {
         Test();
@@ -37,10 +51,19 @@ public class Main : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)){
             Avatar.Instance.UseWriting();
         }
+        if (Input.GetKey(KeyCode.LeftArrow)) {
+            Avatar.Instance.PullUp();
+        }
+        if (Input.GetKey(KeyCode.RightArrow)) {
+            Avatar.Instance.PushDown();
+        }
     }
 
+
     void Test() {
-        Data data = Data.Instance;
+        Debug.Log((-232.669-360) % 360);
+        //Debug.Log(Vector2.Angle(new Vector2(1, 0), new Vector2(1, 1)));
+        //Data data = Data.Instance;
 //         Debug.Log("帽子等级：" + data.lvBowlerHat);
 //         GameObject obj = (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/T_Glasses"));
 //         obj.transform.position = new Vector3(3, 3, 0);

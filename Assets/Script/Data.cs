@@ -24,12 +24,15 @@ class Data :MonoBehaviour {
     private float[] arrHeadband = { 10, 20, 30, 40, 50 };  //发带升级数据
     private float[] arrBowlerHat = { 2, 2.5f, 3, 3.5f, 4 };  //无敌时间长度
     private float[] arrGlasses = { 10, 20, 30, 40, 50 };  //眼镜升级数据
-    private float[] arrInafune = { 1, 2, 3};  //飞船等级
+    private Vector3[] arrInafune = { new Vector3(10,0), new Vector3(20,0), new Vector3(30,0)};  //飞船等级
     private int[] arrWriting = { 1, 2, 3, 4, 5 }; //初始道符数量
     //场景中琐事道具出现的概率
     private int[] popRateHeadband = { 3,7 };  //发带的出现数量
     private int[] popRateBowlerHat = {0,1};  //圆顶帽的出现数量
     private int[] popRateGlasses = { 3,7 };  //眼镜的出现数量
+    //飞行环境因素
+    private float fGravity;
+    private float[] aResistance;
     // public int lvGlasses    = 0;
     // public int lvGlasses    = 0;
     // public int lvGlasses    = 0;
@@ -76,6 +79,11 @@ class Data :MonoBehaviour {
         sr.Dispose();
         //将数组链表容器返回  
         return arrlist;
+    }
+
+    //获得飞船初速度
+    public Vector3 getLaunchSpeed() {
+        return arrInafune[lvInafune];
     }
 
     //获得梦中模式时间
