@@ -53,9 +53,6 @@ class Data :MonoBehaviour {
 
     
     private Data() {
-        CheckData();
-        Debug.Log("重力："+fGravity);
-        Debug.Log("阻力:" + aResistance[0] + " " + aResistance[1] + " " + aResistance[2] + " " + aResistance[3] + " " + aResistance[4] + " ");
     }
     public void CheckData() {
         arrFlightArgu = LoadFile(Application.dataPath + "/Resources/Config", "FlightArgument.txt");
