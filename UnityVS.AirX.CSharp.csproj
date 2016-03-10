@@ -67,6 +67,7 @@
     <Compile Include="Assets\Script\CameraFollow.cs" />
     <Compile Include="Assets\Script\Data.cs" />
     <Compile Include="Assets\Script\Define.cs" />
+    <Compile Include="Assets\Script\EffectControl\EffectDelay.cs" />
     <Compile Include="Assets\Script\GamesceneUI.cs" />
     <Compile Include="Assets\Script\GravitySystemEmulator.cs" />
     <Compile Include="Assets\Script\Main.cs" />

@@ -38,7 +38,12 @@ public class GamesceneUI : MonoBehaviour
         {
             //DontDestroyOnLoad(refMain);
             Application.LoadLevel("Game");
-        }
+		}
+		if (GUILayout.Button("重设状态"))
+		{
+			//DontDestroyOnLoad(refMain);
+			avatar.Init();
+		}
 //         GUILayout.BeginHorizontal();
 //         GUILayout.Label("SpeedX");
 //         //SpeedX = int.Parse(GUILayout.TextArea("" + SpeedX));

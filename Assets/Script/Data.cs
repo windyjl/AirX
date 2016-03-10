@@ -24,7 +24,7 @@ class Data :MonoBehaviour {
     private float[] arrHeadband = { 10, 20, 30, 40, 50 };  //发带升级数据
     private float[] arrBowlerHat = { 2, 2.5f, 3, 3.5f, 4 };  //无敌时间长度
     private float[] arrGlasses = { 10, 20, 30, 40, 50 };  //眼镜升级数据
-    private Vector3[] arrInafune = { new Vector3(10,10), new Vector3(20,20), new Vector3(30,30)};  //飞船等级
+    private Vector3[] arrInafune = { new Vector3(10,5), new Vector3(20,10), new Vector3(30,15)};  //飞船等级
     private int[] arrWriting = { 1, 2, 3, 4, 5 }; //初始道符数量
     //场景中琐事道具出现的概率
     private int[] popRateHeadband = { 3,7 };  //发带的出现数量
@@ -32,8 +32,9 @@ class Data :MonoBehaviour {
     private int[] popRateGlasses = { 3,7 };  //眼镜的出现数量
     //飞行环境因素
     private ArrayList arrFlightArgu;
-    public float fGravity;
-    public float[] aResistance;
+	public float fGravity;
+	public float[] aResistance;
+	public float groundResistance = 10;
     // public int lvGlasses    = 0;
     // public int lvGlasses    = 0;
     // public int lvGlasses    = 0;
