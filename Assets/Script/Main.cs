@@ -14,6 +14,7 @@ public class Main : MonoBehaviour {
         if (instance == null) {
             instance = this;
         }
+		Data.Instance.CheckData();
     }
 
 	// Use this for initialization

@@ -42,6 +42,15 @@ public class Avatar : MonoBehaviour {
         }
     }
 
+	// 初始化状态
+	public void Init(){
+		isLaunched = false;
+		isDragging = false;
+		isControled = false;
+		isLanded = false;
+		isDreamMode = false;
+	}
+
 	// Use this for initialization
 	void Start () {
         logicPosition = new Vector3(0, 0, 0);
@@ -105,11 +114,13 @@ public class Avatar : MonoBehaviour {
         
         //浮力和效果计算  方向 * 大小 * 常数 * 速度
         float spdmag = Speed.magnitude; //TODO 临时限制速度
-        Vector3 res = vectorOfElevationP90 * FnAA(aoa) * kAerodynamics * Speed.magnitude * Time.deltaTime;
+        Vector3 res = vectorOfElevationP90 * FnAA(aoa) * kAerodynamics * Speed.magnitude;
 //         Debug.Log("角度"+angleOfElevation+
 //             "\t攻角"+aoa+
 //             "\n方向" + vectorOfElevationP90 + "\n大小" + FnAA(aoa) + "\t常数" + kAerodynamics + "\t速度" +Speed.magnitude+"\n结果:"+res);
-        Speed += res;
+		Debug.Log ("机翼垂直方向"+Vector3.Angle (vectorOfElevationP90, Speed));
+		Debug.Log ("升力方向"+Vector3.Angle (res, Speed));
+		Speed += res  * Time.deltaTime;
         Speed = Speed.normalized * spdmag;//TODO 临时限制速度
 
         //重力计算
@@ -118,10 +129,10 @@ public class Avatar : MonoBehaviour {
         Speed = Speed.normalized * (Speed.magnitude - Data.Instance.getResistance()*Time.deltaTime);
 
         //着陆后减速
-        if (logicPosition.y<=0){
+        if (isLanded){
             //Debug.Log(timeLaunch-Time.time);
             if (Speed.x > 0) {
-                Speed.x -= Data.Instance.getResistance() * Time.deltaTime;
+                Speed.x -= Data.Instance.groundResistance * Time.deltaTime;
             } else {
                 Speed.x = 0;
             }

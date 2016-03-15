@@ -1,4 +1,11 @@
 *.log
 /Library/
 /Temp/
+*.csproj
 *.suo
+*.sln
+/*.XML
+/*.htm
+/*.userprefs
+obj/
+_UpgradeReport_Files/
