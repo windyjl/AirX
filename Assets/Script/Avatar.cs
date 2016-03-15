@@ -118,8 +118,7 @@ public class Avatar : MonoBehaviour {
 //         Debug.Log("角度"+angleOfElevation+
 //             "\t攻角"+aoa+
 //             "\n方向" + vectorOfElevationP90 + "\n大小" + FnAA(aoa) + "\t常数" + kAerodynamics + "\t速度" +Speed.magnitude+"\n结果:"+res);
-		Debug.Log ("机翼垂直方向"+Vector3.Angle (vectorOfElevationP90, Speed));
-		Debug.Log ("升力方向"+Vector3.Angle (res, Speed));
+		Debug.Log ("机翼垂直方向"+Vector3.Angle (vectorOfElevationP90, Speed)+"\n升力方向"+Vector3.Angle (res, Speed));
 		Speed += res  * Time.deltaTime;
         Speed = Speed.normalized * spdmag;//TODO 临时限制速度
 

@@ -9,16 +9,18 @@ public class Main : MonoBehaviour {
             return instance;
         }
     }
+    public static string sPath="";
 
     public void Awake() {
+        sPath = Application.dataPath;
         if (instance == null) {
             instance = this;
         }
-		Data.Instance.CheckData();
     }
 
 	// Use this for initialization
-	void Start () {
+    void Start() {
+        Data.Instance.CheckData();
         Test();
 	}
 	

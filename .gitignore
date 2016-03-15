@@ -9,3 +9,5 @@
 /*.userprefs
 obj/
 _UpgradeReport_Files/
+*.suo
+*.csproj
