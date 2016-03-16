@@ -23,7 +23,7 @@ class PopControllor {
      * 下标1 - 4种分类
      * 下标2 - 出现时间（超过十秒的属于不刷新）
      */
-    public double[][] popList = new double[4][];
+    public double[][] popList = new double[(int)TrifleType.Max-1][];
     private float lastCreateTime = -10;
     private System.Random rand = new System.Random();
 
@@ -34,8 +34,31 @@ class PopControllor {
             return;
         }
         lastCreateTime = timenow;
-        for (int i = 0; i < 4;++i ) {
-            popList[i] = new double[rand.Next(3, 8)];//3-7，不包括最后一个
+        for (int i = 0; i < (int)TrifleType.Max - 1; ++i) {
+            int[] arr;
+            switch ((TrifleType)i) {
+                case TrifleType.Star:
+                    arr = Data.Instance.getStarPopNum();
+                    break;
+                case TrifleType.Headband:
+                    arr = Data.Instance.getHeadBandPopNum();
+                    break;
+                case TrifleType.BowlerHat:
+                    arr = Data.Instance.getBowlerHatPopNum();
+                    break;
+                case TrifleType.Glasses:
+                    arr = Data.Instance.getGlassesPopNum();
+                    break;
+                case TrifleType.Writing:
+                    arr = Data.Instance.getWritingPopNum();
+                    break;
+                default:
+                    arr = new int[2];
+                    arr[0] = 3;
+                    arr[1] = 7;
+                    break;
+            }
+            popList[i] = new double[rand.Next(arr[0], arr[1])];//3-7，不包括最后一个
             for (int j = 0; j < popList[i].Length;++j ) {
                 popList[i][j] = rand.NextDouble() * 10;
             }

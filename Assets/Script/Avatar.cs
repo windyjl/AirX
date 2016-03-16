@@ -118,14 +118,20 @@ public class Avatar : MonoBehaviour {
 //         Debug.Log("角度"+angleOfElevation+
 //             "\t攻角"+aoa+
 //             "\n方向" + vectorOfElevationP90 + "\n大小" + FnAA(aoa) + "\t常数" + kAerodynamics + "\t速度" +Speed.magnitude+"\n结果:"+res);
-		Debug.Log ("机翼垂直方向"+Vector3.Angle (vectorOfElevationP90, Speed)+"\n升力方向"+Vector3.Angle (res, Speed));
+//		Debug.Log ("机翼垂直方向"+Vector3.Angle (vectorOfElevationP90, Speed)+"\n升力方向"+Vector3.Angle (res, Speed));
 		Speed += res  * Time.deltaTime;
-        Speed = Speed.normalized * spdmag;//TODO 临时限制速度
+        //Speed = Speed.normalized * spdmag;//TODO 临时限制速度
 
         //重力计算
         Speed.y -= Data.Instance.fGravity*Time.deltaTime;
         //阻力计算
-        Speed = Speed.normalized * (Speed.magnitude - Data.Instance.getResistance()*Time.deltaTime);
+        //Speed = Speed.normalized * (Speed.magnitude - Data.Instance.getResistance()*Time.deltaTime);
+        float resistance = Data.Instance.getResistance() * Time.deltaTime;
+        if (Speed.x - resistance > 0) {
+            Speed.x -= Data.Instance.getResistance() * Time.deltaTime;
+        } else {
+            Speed.x = 0;
+        }
 
         //着陆后减速
         if (isLanded){

@@ -2,7 +2,7 @@
 using System.Collections;
 public enum TrifleType
 {
-    None=0,
+    Star=0,     //星星
     Headband,   //发带
     BowlerHat,  //礼帽
     Glasses,    //眼镜
@@ -13,7 +13,8 @@ public class Trifle : MonoBehaviour {
     public TrifleType myType;
     protected float lastPop = 0;
     protected float popRate = 3;
-    public static string[] triflePrefabNames = { "T_Headband", "T_Hat", "T_Glasses", "T_Writing"};
+    public static string[] triflePrefabNames = { "T_Star", "T_Headband", "T_Hat", "T_Glasses", "T_Writing"};
+    public static string[] arrMoneyEffect = { "Effect_GetMoney_5", "Effect_GetMoney_10", "Effect_GetMoney_15", "Effect_GetMoney_20", "Effect_GetMoney_25" };
 	// Use this for initialization
 	void Start () {
         Init();
@@ -45,9 +46,15 @@ public class Trifle : MonoBehaviour {
     void DealEffect(Avatar target) {
         //测试
         Debug.Log("触发了效果，ID：" + (int)myType);
-
         //根据自身类型触发不同效果
         switch (myType) {
+            case TrifleType.Star:
+                Data.Instance.touchStarGetMoney();
+                GameObject obj = (GameObject)Instantiate(Resources.Load("Prefabs/Effects/" + arrMoneyEffect[Data.Instance.lvStarMult]));
+                obj.transform.position = Avatar.Instance.gameObject.transform.position;
+                obj.transform.parent = Camera.main.transform;
+                //obj.GetComponent<ParticleSystem>()
+                break;
             case TrifleType.Headband:
                 target.setHeightUp();
                 break;

@@ -4,6 +4,7 @@ using System.Collections;
 public class Main : MonoBehaviour {
     private static Main instance;
     private Main() {}
+    public GameObject uiLevelEnd;
     public static Main Instance {
         get {
             return instance;
@@ -26,13 +27,21 @@ public class Main : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        if (Avatar.Instance.isLaunched) {
+        if (Avatar.Instance.isLaunched && !Avatar.Instance.isLanded) {
             PopControllor.Instance.CreatePopList(Time.time);
             ReadPopList();
             DealKeyBoardControl();
         }
+
+        CheckAirXLand();
 	}
+
+    //确认飞行结束
+    void CheckAirXLand() {
+        if (Avatar.Instance.isLanded&&Avatar.Instance.Speed.magnitude<Mathf.Epsilon){
+            uiLevelEnd.SetActive(true);
+        }
+    }
 
     //读取列表信息并创建琐事单位
     void ReadPopList() {

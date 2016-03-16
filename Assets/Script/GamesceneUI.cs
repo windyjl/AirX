@@ -74,6 +74,7 @@ public class GamesceneUI : MonoBehaviour
 		*/
         //Vector3 pos = refMain.player.transform.position;
         GUILayout.Label("道符：" + avatar.nWriting);
+        GUILayout.Label("金币：" + Data.Instance.getMoney());
         GUILayout.Label("空格使用道符");
         GUILayout.Label("←→ 调整角度");
         //GUILayout.Label("角色逻辑坐标 (" + pos.x.ToString("f2") + "," + pos.y.ToString("f2") + ")");
