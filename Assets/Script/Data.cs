@@ -7,10 +7,12 @@ using System.Linq;
 using System.Text;
 
 class ItemData{
-    public const int LinePerItem = 3;//how many line describe an item
+    public const int LinePerItem = 4;//how many line describe an item
     private static int IDCount = 0;
     public int itemID;
     public string itemDescription = "这是唯有让自己的亲生妹妹怀孕的人才能使用的传说之剑";
+    public float[] arrValue;
+    public float[] arrPrice;
     public ItemData(string _str){
         itemID = IDCount++;
         itemDescription = _str;
@@ -32,7 +34,7 @@ class Data :MonoBehaviour {
     public int lvBowlerHat  = 4;//礼帽升级数据（出现频率，提升无敌时间）
     public int lvGlasses    = 0;//眼镜升级数据（出现频率，提升数值）
     public int lvWriting = 0;//道符升级数据（出现频率，提升数值）
-    public int lvInafune = 0;//飞船等级
+    public int lvInafune = 1;//飞船等级
     public int lvResistance = 0;
     //道具等级对应的数据
     public int[] arrValueStar = { 5,10,15,20,25 };  //星星的出现数量
@@ -95,10 +97,14 @@ class Data :MonoBehaviour {
             string[] astr = _arrItemData[i].ToString().Split(':');
             if (astr[0].Equals("ID")) {
                 Debug.Log("load Item:" + astr[1] + "\tat index:" + i);
-            } else if (astr[0].Equals("描述")) {
+            } else if (astr[0].Equals("Description")) {
                 arrItemData[i / ItemData.LinePerItem] = new ItemData(astr[1]);
-            } else if (astr[0].Equals("数值")) {
+            } else if (astr[0].Equals("Value")) {
                 //arrItemData[i / ItemData.LinePerItem] = new ItemData(astr[1]);
+                arrItemData[i / ItemData.LinePerItem].arrValue = SplitStringToFloat(astr[1], ',');
+            } else if (astr[0].Equals("Price")) {
+                //arrItemData[i / ItemData.LinePerItem] = new ItemData(astr[1]);
+                arrItemData[i / ItemData.LinePerItem].arrPrice = SplitStringToFloat(astr[1], ',');
             } else {
                 Debug.Log("该行数据未找到配对的存储对象:" + _arrItemData[i]);
             }

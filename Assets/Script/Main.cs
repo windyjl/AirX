@@ -5,6 +5,7 @@ public class Main : MonoBehaviour {
     private static Main instance;
     private Main() {}
     public GameObject uiLevelEnd;
+    public Sprite[] ZeroSprites;
     public static Main Instance {
         get {
             return instance;
@@ -23,6 +24,7 @@ public class Main : MonoBehaviour {
     void Start() {
         Data.Instance.CheckData();
         Test();
+        InitPlane();
 	}
 	
 	// Update is called once per frame
@@ -35,6 +37,24 @@ public class Main : MonoBehaviour {
 
         CheckAirXLand();
 	}
+
+    void InitPlane() {
+        SpriteRenderer sprite = Avatar.Instance.GetComponent<SpriteRenderer>();
+        switch (Data.Instance.lvInafune) {
+            case 0:
+                sprite.sprite = ZeroSprites[0];//(Sprite)Resources.Load("Image/情书号");
+                break;
+            case 1:
+                sprite.sprite = ZeroSprites[1];//(Sprite)Resources.Load("Image/搞死号");
+                break;
+            case 2:
+                sprite.sprite = ZeroSprites[2];//(Sprite)Resources.Load("Image/惟楚号");
+                break;
+            default:
+                Debug.Log("草泥马，飞船等级错误");
+                break;
+        }
+    }
 
     //确认飞行结束
     void CheckAirXLand() {

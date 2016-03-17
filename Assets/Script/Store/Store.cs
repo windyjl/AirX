@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public class Store : MonoBehaviour {
     public Text ItemTips;
-    public GameObject[] ShopItem;
+    public Text ItemPrice;
+    public GameObject[] arrShopItem;
     private RectTransform tranItemTips;
-
+    private int IDItemSelecting = -1;
 	// Use this for initialization
 	void Start () {
         //tranItemTips = ItemTips.transform as RectTransform;
@@ -28,8 +29,8 @@ public class Store : MonoBehaviour {
 
     //注册事件
     void regEvent() {
-        for (int i = 0; i < ShopItem.Length; i++) {
-            EventTriggerListener.Get(ShopItem[i]/*.GetComponent<Button>()*/).onClick = OnButtonClick;
+        for (int i = 0; i < arrShopItem.Length; i++) {
+            EventTriggerListener.Get(arrShopItem[i]/*.GetComponent<Button>()*/).onClick = OnButtonClick;
         }
     }
 
@@ -41,14 +42,16 @@ public class Store : MonoBehaviour {
         //Debug.Log("各位能写句完整的吗?");
         int id = go.GetComponent<ShopItem>().itemID;
         ItemData data = Data.Instance.arrItemData[id - 1];
+        IDItemSelecting = id;
         ItemTips.text = data.itemDescription;
+        ItemPrice.text = "$"+data.arrPrice[Data.Instance.lvBowlerHat];
         clearOutLine();
-        go.GetComponent<Outline>().enabled = true;
+        go.GetComponent<ShopItem>().setAvailable();
     }
 
     void clearOutLine() {
-        for (int i = 0; i < ShopItem.Length; i++) {
-            ShopItem[i].GetComponent<Outline>().enabled = false;
+        for (int i = 0; i < arrShopItem.Length; i++) {
+            arrShopItem[i].GetComponent<ShopItem>().setUnvailable();
         }
     }
 
