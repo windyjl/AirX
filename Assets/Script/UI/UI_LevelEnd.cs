@@ -22,8 +22,17 @@ public class UI_LevelEnd : MonoBehaviour {
         if (!isAniOver) {
             aniCount += Time.deltaTime;
             rectTrans.anchoredPosition = Vector2.Lerp(posStart, Vector2.zero, aniCount / aniDuration);
+            if (aniCount > aniDuration) {
+                isAniOver = true;
+            }
         }
-
+        if (Input.GetMouseButtonDown(0)){
+            if (isAniOver){
+                Application.LoadLevel("Store");
+            } else {
+                aniCount = aniDuration;
+            }
+        }
 
         // ↓从雨松处借鉴的代码，用于理解屏幕坐标
         //Vector2 pos;

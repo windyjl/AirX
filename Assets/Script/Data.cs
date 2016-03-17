@@ -6,7 +6,16 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-
+class ItemData{
+    public const int LinePerItem = 3;//how many line describe an item
+    private static int IDCount = 0;
+    public int itemID;
+    public string itemDescription = "这是唯有让自己的亲生妹妹怀孕的人才能使用的传说之剑";
+    public ItemData(string _str){
+        itemID = IDCount++;
+        itemDescription = _str;
+    }
+}
 class Data :MonoBehaviour {
     private static readonly Data instance = new Data();
     public static Data Instance {  get  {  return instance;   } }
@@ -14,6 +23,8 @@ class Data :MonoBehaviour {
     public static float SCREEN_WIDTH = 12.8f;
     public static float SCREEN_HEIGHT = 7.2f;
     public Dictionary<string,int> setting = new Dictionary<string,int>();
+    //
+    public ItemData[] arrItemData;
     //数值们
     private int money = 0;
     public int lvStarMult   = 0;//星星倍率
@@ -24,12 +35,12 @@ class Data :MonoBehaviour {
     public int lvInafune = 0;//飞船等级
     public int lvResistance = 0;
     //道具等级对应的数据
-    private int[] arrValueStar = { 5,10,15,20,25 };  //星星的出现数量
-    private float[] arrHeadband = { 10, 20, 30, 40, 50 };  //发带升级数据
-    private float[] arrBowlerHat = { 2, 2.5f, 3, 3.5f, 4 };  //无敌时间长度
-    private float[] arrGlasses = { 10, 20, 30, 40, 50 };  //眼镜升级数据
-    private Vector3[] arrInafune = { new Vector3(10,5), new Vector3(20,10), new Vector3(30,15)};  //飞船等级
-    private int[] arrWriting = { 1, 2, 3, 4, 5 }; //初始道符数量
+    public int[] arrValueStar = { 5,10,15,20,25 };  //星星的出现数量
+    public float[] arrHeadband = { 10, 20, 30, 40, 50 };  //发带升级数据
+    public float[] arrBowlerHat = { 2, 2.5f, 3, 3.5f, 4 };  //无敌时间长度
+    public float[] arrGlasses = { 10, 20, 30, 40, 50 };  //眼镜升级数据
+    public Vector3[] arrInafune = { new Vector3(10,5), new Vector3(20,10), new Vector3(30,15)};  //飞船等级
+    public int[] arrWriting = { 1, 2, 3, 4, 5 }; //初始道符数量
     //场景中琐事道具出现的概率
     private int[] popRateStar = { 45, 55 };  //星星的出现数量
     private int[] popRateHeadband = { 3,7 };  //发带的出现数量
@@ -37,7 +48,6 @@ class Data :MonoBehaviour {
     private int[] popRateGlasses = { 3,7 };  //眼镜的出现数量
     private int[] arrRateWriting = { 3, 7 }; //道符出现数量
     //飞行环境因素
-    private ArrayList arrFlightArgu;
 	public float fGravity;
 	public float[] aResistance;
 	public float groundResistance = 10;
@@ -61,8 +71,11 @@ class Data :MonoBehaviour {
     
     private Data() {
     }
+
+    //数据读取
     public void CheckData() {
-        arrFlightArgu = LoadFile(Main.sPath + "/Resources/Config", "FlightArgument.txt");
+        //飞行参数
+        ArrayList arrFlightArgu = LoadFile(Application.dataPath + "/Resources/Config", "FlightArgument.txt");
         for (int i = arrFlightArgu.Count - 1; i >= 0; --i) {
             string[] astr = arrFlightArgu[i].ToString().Split(':');
             if (astr[0].Equals("重力")){
@@ -73,6 +86,22 @@ class Data :MonoBehaviour {
                 Debug.Log("该行数据为找到配对的存储对象:" + arrFlightArgu[i]);
             }
             arrFlightArgu.RemoveAt(i);
+        }
+
+        //道具参数
+        ArrayList _arrItemData = LoadFile(Application.dataPath + "/Resources/Config", "ItemData.txt");
+        arrItemData = new ItemData[_arrItemData.Count / ItemData.LinePerItem];
+        for (int i = 0; i < _arrItemData.Count ; i++){
+            string[] astr = _arrItemData[i].ToString().Split(':');
+            if (astr[0].Equals("ID")) {
+                Debug.Log("load Item:" + astr[1] + "\tat index:" + i);
+            } else if (astr[0].Equals("描述")) {
+                arrItemData[i / ItemData.LinePerItem] = new ItemData(astr[1]);
+            } else if (astr[0].Equals("数值")) {
+                //arrItemData[i / ItemData.LinePerItem] = new ItemData(astr[1]);
+            } else {
+                Debug.Log("该行数据未找到配对的存储对象:" + _arrItemData[i]);
+            }
         }
     }
     public float[] SplitStringToFloat(string str,char c){

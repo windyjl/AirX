@@ -38,7 +38,7 @@ public class Main : MonoBehaviour {
 
     //确认飞行结束
     void CheckAirXLand() {
-        if (Avatar.Instance.isLanded&&Avatar.Instance.Speed.magnitude<Mathf.Epsilon){
+        if (Avatar.Instance.isLanded&&Avatar.Instance.Speed.magnitude<Mathf.Epsilon&&!uiLevelEnd.activeInHierarchy){
             uiLevelEnd.SetActive(true);
         }
     }
